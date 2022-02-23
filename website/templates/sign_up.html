@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+
+<form method="post">
+    <h3 align="center"></h3>
+    <div class="form-group">
+
+        <h2 style="padding-left: 620px">Sign Up</h2>
+
+        <div align="center">
+
+
+            <br>
+
+             <label for="name">Full Name</label>
+        <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            placeholder="Enter your full name"
+            maxlength="30"
+            style="width: 300px"
+            required
+        />
+
+        <label for="email">Email Address</label>
+        <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="Enter your email address"
+            maxlength="35"
+            style="width: 300px"
+            required
+        />
+
+            <label style="padding-top: 10px" for="city">City</label>
+                        <select style="width: 300px" id="city"  class="form-control"  name="city" required>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Pune">Pune</option>
+                            <option value="Bengaluru">Bengaluru</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Hyderabad">Hyderabad</option>
+                            <option value="Ahmedabad">Ahmedabad</option>
+                            <option value="Chennai">Chennai</option>
+                            <option value="Kolkata">Kolkata</option>
+                            <option value="Surat">Surat</option>
+                            <option value="Jaipur">Jaipur</option>
+                            <option value="Lucknow">Lucknow</option>
+                            <option value="Kanpur">Kanpur</option>
+                            <option value="Nagpur">Nagpur</option>
+                            <option value="Indore">Indore</option>
+                            <option value="Thane">Thane</option>
+                            <option value="Madurai">Madurai</option>
+
+                        </select>
+
+            <label for="password1">Password</label>
+        <input
+            type="password"
+            class="form-control"
+            id="password1"
+            name="password1"
+            placeholder="Enter your password"
+            maxlength="10"
+            style="width: 300px"
+            required
+        />
+               <label for="password2">Confirm Password</label>
+        <input
+            type="password"
+            class="form-control"
+            id="password2"
+            name="password2"
+            placeholder="Confirm your password"
+            maxlength="10"
+            style="width: 300px"
+            required
+        />
+
+            <br>
+            <button class="btn" style="border-radius: 12px;background: -webkit-linear-gradient(top, #FF5E0E, #FF9944);">Sign Up</button>
+
+        </div>
+
+
+    </div>
+</form>
+
+{% endblock %}

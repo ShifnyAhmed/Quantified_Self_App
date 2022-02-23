@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<form method="post">
+    <h3 align="center"></h3>
+    <div class="form-group">
+
+        <h2 style="padding-left: 630px">Login</h2>
+
+        <div align="center">
+
+
+            <br>
+
+
+        <label for="email">Email Address</label>
+        <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="Enter your email address"
+            style="width: 300px"
+            required
+        />
+
+            <label for="password">Password</label>
+        <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            style="width: 300px"
+            required
+        />
+
+
+            <br>
+            <button class="btn" style="border-radius: 12px;background: -webkit-linear-gradient(top, #FF5E0E, #FF9944);">Login</button>
+
+        </div>
+
+
+    </div>
+</form>
+
+
+{% endblock %}
