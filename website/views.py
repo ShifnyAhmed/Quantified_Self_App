@@ -155,9 +155,43 @@ def add_log(record_id):
             new_log = Log(timestamp=when, value=value, notes=notes, tracker_id=record_id, user_id=current_user.id)
             db.session.add(new_log)
             db.session.commit()
-            flash('New Log Added For '+this_tracker.name+' Tracker', category='success')
+            flash('New Log Added For ' + this_tracker.name + ' Tracker', category='success')
             return redirect(url_for('views.home'))
     except Exception as e:
         print(e)
         flash('Something went wrong.', category='error')
     return render_template("add_log_page.html", user=current_user, tracker=this_tracker, now=now)
+
+
+@views.route('/view-tracker-graph-logs/<int:record_id>', methods=['GET', 'POST'])
+@login_required
+def view_tracker(record_id):
+    from .models import Tracker, Log
+    selected_tracker = Tracker.query.get(record_id)
+    logs = Log.query.all()
+    try:
+        import sqlite3
+        con = sqlite3.connect('E:\Quantified_Self_App\website\database.db')
+        print("Database opened successfully")
+        c = con.cursor()
+        c.execute('SELECT timestamp, value FROM Log WHERE user_id={} AND tracker_id={}'.format(current_user.id,
+                                                                                               selected_tracker.id))
+        data = c.fetchall()
+
+        dates = []
+        values = []
+        import matplotlib.pyplot as plt
+        from matplotlib import style
+        style.use('fivethirtyeight')
+        from dateutil import parser
+
+        for row in data:
+            dates.append(parser.parse(row[0]))
+            values.append(row[1])
+
+        plt.plot_date(dates, values, '-')
+        plt.show()
+    except Exception as e:
+        print(e)
+        flash('Something went wrong.', category='error')
+    return render_template("view_tracker_logs_and_graph.html", user=current_user, tracker=selected_tracker, logs=logs)

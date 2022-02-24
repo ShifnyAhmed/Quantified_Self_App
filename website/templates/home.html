@@ -20,7 +20,7 @@
     {% if tracker.user_id==user.id  %}
     <tr>
         {% set tracker_id=tracker.id %}
-      <td>{{tracker.name}}</td>
+      <td><a href="{{ url_for('views.view_tracker', record_id = tracker_id) }}">{{tracker.name}}</a></td>
       <td>{{tracker.description}}</td>
       <td><a href="{{ url_for('views.add_log', record_id = tracker_id) }}" class="btn" style="border-radius: 15px; font-size: 20px">✚</a></td>
       <td>
