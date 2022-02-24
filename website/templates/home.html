@@ -28,9 +28,10 @@
   <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 15px;background: -webkit-linear-gradient(bottom, #FF5E0E, #FF9944);">
     <b>Actions</b>
   </button>
+              {% set tracker_id=tracker.id %}
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     <a class="dropdown-item" href="#">Edit Tracker</a>
-    <a class="dropdown-item" href="#">Remove Tracker</a>
+    <a class="dropdown-item" href="{{ url_for('views.delete_tracker', record_id = tracker_id) }}">Remove Tracker</a>
   </div>
 </div>
 

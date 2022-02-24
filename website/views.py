@@ -86,4 +86,18 @@ def add_tracker_page():
     return render_template("add_tracker_page.html", user=current_user)
 
 
-
+@views.route('/delete-tracker/<int:record_id>', methods=['GET', 'POST'])
+@login_required
+def delete_tracker(record_id):
+    try:
+        from .models import Tracker
+        Tracker_details = Tracker.query.get(record_id)
+        Tracker_name = Tracker_details.name
+        from . import db
+        db.session.delete(Tracker_details)
+        db.session.commit()
+        flash(Tracker_name+' Tracker Removed Successfully.', category='success')
+    except Exception as e:
+        print(e)
+        flash('Something went wrong.', category='error')
+    return redirect(url_for('views.home'))
