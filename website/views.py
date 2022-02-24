@@ -137,3 +137,27 @@ def edit_tracker(record_id):
         flash('Something went wrong.', category='error')
 
     return render_template("edit_tracker_page.html", user=current_user, tracker=this_tracker)
+
+
+@views.route('/add-log-page/<int:record_id>', methods=['GET', 'POST'])
+@login_required
+def add_log(record_id):
+    from .models import Tracker, Log
+    this_tracker = Tracker.query.get(record_id)
+    import datetime
+    now = datetime.datetime.now()
+    try:
+        if request.method == 'POST':
+            when = request.form.get('date')
+            value = request.form.get('value')
+            notes = request.form.get('notes')
+            from . import db
+            new_log = Log(timestamp=when, value=value, notes=notes, tracker_id=record_id, user_id=current_user.id)
+            db.session.add(new_log)
+            db.session.commit()
+            flash('New Log Added For '+this_tracker.name+' Tracker', category='success')
+            return redirect(url_for('views.home'))
+    except Exception as e:
+        print(e)
+        flash('Something went wrong.', category='error')
+    return render_template("add_log_page.html", user=current_user, tracker=this_tracker, now=now)
