@@ -195,3 +195,20 @@ def view_tracker(record_id):
         print(e)
         flash('Something went wrong.', category='error')
     return render_template("view_tracker_logs_and_graph.html", user=current_user, tracker=selected_tracker, logs=logs)
+
+
+@views.route('/delete-log/<int:record_id>', methods=['GET', 'POST'])
+@login_required
+def delete_log(record_id):
+    from .models import Log
+    Log_details = Log.query.get(record_id)
+    tracker_id = Log_details.tracker_id
+    try:
+        from . import db
+        db.session.delete(Log_details)
+        db.session.commit()
+        flash('Log Removed Successfully.', category='success')
+    except Exception as e:
+        print(e)
+        flash('Something went wrong.', category='error')
+    return redirect(url_for('views.view_tracker', record_id=tracker_id))
