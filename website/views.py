@@ -54,3 +54,36 @@ def edit_profile_page():
         print(e)
         flash('Something went wrong.', category='error')
     return render_template("edit_profile_page.html", user=current_user)
+
+
+@views.route('/add-tracker-page', methods=['GET', 'POST'])
+@login_required
+def add_tracker_page():
+    try:
+        if request.method == 'POST':
+            name = request.form.get('name')
+            description = request.form.get('description')
+            tracker_type = request.form.get('type')
+            settings = request.form.get('settings')
+
+            from .models import Tracker
+            current_user_id = current_user.id
+            tracker = Tracker.query.filter_by(name=name).first()
+            if tracker and current_user_id == tracker.user_id:
+                flash('The tracker "' + name + '" is already added by you.', category='error')
+                return redirect(url_for('views.home'))
+            else:
+                from . import db
+                new_tracker = Tracker(name=name, description=description, tracker_type=tracker_type, settings=settings,
+                                      user_id=current_user_id)
+                db.session.add(new_tracker)
+                db.session.commit()
+                flash('New Tracker Added.', category='success')
+                return redirect(url_for('views.home'))
+    except Exception as e:
+        print(e)
+        flash('Something went wrong.', category='error')
+    return render_template("add_tracker_page.html", user=current_user)
+
+
+

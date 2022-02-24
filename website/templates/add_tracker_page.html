@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+        <h1 align="left" class="card-header text-white" style="background: -webkit-linear-gradient(bottom, #FF5E0E, #FF9944);">Hello, {{ user.fullname }}</h1>
+
+<form method="post">
+    <h3 align="center"></h3>
+    <div class="form-group">
+
+        <h2 style="padding-left: 580px">Add Tracker</h2>
+
+        <div align="center">
+
+
+            <br>
+
+             <label for="name">Name</label>
+        <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            placeholder="Enter tracker name"
+            maxlength="30"
+            style="width: 300px; border-radius: 15px; text-align: center"
+            required
+        />
+            <label for="description">Description</label>
+        <textarea
+            class="form-control"
+            id="description"
+            name="description"
+            placeholder="Enter tracker description"
+            maxlength="200"
+            style="width: 300px; border-radius: 15px; text-align: center"
+            required
+        ></textarea>
+
+
+            <label style="padding-top: 10px" for="type">Tracker Type</label>
+                        <select style="width: 300px;border-radius: 15px; text-align: center" id="type"  class="form-control"  name="type" required>
+                            <option value="Numerical">Numerical</option>
+                            <option value="Multiple Choice">Multiple Choice</option>
+                            <option value="Fahrenheit">Fahrenheit</option>
+
+
+                        </select>
+
+          <label for="settings">Settings <small>(Optional)</small></label>
+        <input
+            type="text"
+            class="form-control"
+            id="settings"
+            name="settings"
+            placeholder="Enter tracker settings"
+            maxlength="80"
+            style="width: 300px; border-radius: 15px; text-align: center"
+        />
+
+            <br>
+            <button type="submit" class="btn" style="border-radius: 12px;background: -webkit-linear-gradient(top, #FF5E0E, #FF9944);"><b>✩ Add Tracker</b></button>
+
+        </div>
+
+
+    </div>
+</form>
+
+{% endblock %}
