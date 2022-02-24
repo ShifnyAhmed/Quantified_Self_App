@@ -96,8 +96,44 @@ def delete_tracker(record_id):
         from . import db
         db.session.delete(Tracker_details)
         db.session.commit()
-        flash(Tracker_name+' Tracker Removed Successfully.', category='success')
+        flash(Tracker_name + ' Tracker Removed Successfully.', category='success')
     except Exception as e:
         print(e)
         flash('Something went wrong.', category='error')
     return redirect(url_for('views.home'))
+
+
+@views.route('/edit-tracker/<int:record_id>', methods=['GET', 'POST'])
+@login_required
+def edit_tracker(record_id):
+    from .models import Tracker
+    this_tracker = Tracker.query.get(record_id)
+    this_tracker_name = this_tracker.name
+    try:
+        if request.method == 'POST':
+            name = request.form.get('name')
+            description = request.form.get('description')
+            tracker_type = request.form.get('type')
+            settings = request.form.get('settings')
+
+            current_user_id = current_user.id
+            tracker = Tracker.query.filter_by(name=name).first()
+            if tracker and tracker.user_id == current_user_id and this_tracker_name != name:
+                flash('The tracker "' + name + '" is already added by you, Try a new name for your tracker.',
+                      category='error')
+            else:
+                from . import db
+
+                this_tracker.name = name
+                this_tracker.description = description
+                this_tracker.tracker_type = tracker_type
+                this_tracker.settings = settings
+
+                db.session.commit()
+                flash('Tracker Updated Successfully.', category='success')
+                return redirect(url_for('views.home'))
+    except Exception as e:
+        print(e)
+        flash('Something went wrong.', category='error')
+
+    return render_template("edit_tracker_page.html", user=current_user, tracker=this_tracker)

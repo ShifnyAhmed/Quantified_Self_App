@@ -30,7 +30,7 @@
   </button>
               {% set tracker_id=tracker.id %}
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Edit Tracker</a>
+    <a class="dropdown-item" href="{{ url_for('views.edit_tracker', record_id = tracker_id) }}">Edit Tracker</a>
     <a class="dropdown-item" href="{{ url_for('views.delete_tracker', record_id = tracker_id) }}">Remove Tracker</a>
   </div>
 </div>
