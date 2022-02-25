@@ -212,3 +212,30 @@ def delete_log(record_id):
         print(e)
         flash('Something went wrong.', category='error')
     return redirect(url_for('views.view_tracker', record_id=tracker_id))
+
+
+@views.route('/edit-log/<int:record_id>', methods=['GET', 'POST'])
+@login_required
+def edit_log(record_id):
+    from .models import Log, Tracker
+    from . import db
+    this_log = Log.query.get(record_id)
+    this_tracker = Tracker.query.get(this_log.tracker_id)
+    try:
+        if request.method == 'POST':
+            when = request.form.get('date')
+            value = request.form.get('value')
+            notes = request.form.get('notes')
+
+            this_log.timestamp = when
+            this_log.value = value
+            this_log.notes = notes
+
+            db.session.commit()
+            flash(this_tracker.name+' Log Updated Successfully.', category='success')
+            return redirect(url_for('views.view_tracker', record_id=this_log.tracker_id))
+    except Exception as e:
+        print(e)
+        flash('Something went wrong.', category='error')
+
+    return render_template("edit_log_page.html", user=current_user, tracker=this_tracker, log=this_log)

@@ -71,7 +71,7 @@
   </button>
 
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Edit Log</a>
+    <a class="dropdown-item" href="{{ url_for('views.edit_log', record_id = log_id) }}">Edit Log</a>
     <a class="dropdown-item" href="{{ url_for('views.delete_log', record_id = log_id) }}">Remove Log</a>
   </div>
 </div>
