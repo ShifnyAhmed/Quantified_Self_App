@@ -209,12 +209,12 @@ def view_tracker(record_id):
         hour = last_updated_str[:1]
         min1 = last_updated_str[2]
         min2 = last_updated_str[3]
-        min = min1 + min2
+        minute = min1 + min2
         sec1 = last_updated_str[5]
         sec2 = last_updated_str[6]
-        sec = sec1 + sec2
+        second = sec1 + sec2
         return render_template("view_tracker_logs_and_graph.html", user=current_user, tracker=selected_tracker,
-                               logs=logs, hour=hour, min=min, sec=sec)
+                               logs=logs, hour=hour, min=minute, sec=second)
     except Exception as e:
         print(e)
         flash('Something went wrong.', category='error')
