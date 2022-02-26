@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Profile{% endblock %}
+{% block title %}Dashboard{% endblock %}
 {% block content %}
         <h1 align="left" class="card-header text-white" style="background: -webkit-linear-gradient(bottom, #FF5E0E, #FF9944);">Hello, {{ user.fullname }}</h1>
 
@@ -10,7 +10,7 @@
   <thead class="thead-dark">
     <tr>
       <th scope="col">Tracker</th>
-        <th scope="col">Description</th>
+      <th scope="col">Description</th>
       <th scope="col"></th>
       <th scope="col"></th>
     </tr>
@@ -19,16 +19,17 @@
 {% for tracker in tracker %}
     {% if tracker.user_id==user.id  %}
     <tr>
-      <td>{{tracker.name}}</td>
+        {% set tracker_id=tracker.id %}
+      <td><a href="{{ url_for('views.view_tracker', record_id = tracker_id) }}">{{tracker.name}}</a></td>
       <td>{{tracker.description}}</td>
-      <td><a href="#" class="btn" style="border-radius: 15px; font-size: 20px">✚</a></td>
+      <td><a href="{{ url_for('views.add_log', record_id = tracker_id) }}" class="btn" style="border-radius: 15px; font-size: 20px">✚</a></td>
       <td>
 
           <div class="dropdown">
   <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 15px;background: -webkit-linear-gradient(bottom, #FF5E0E, #FF9944);">
     <b>Actions</b>
   </button>
-              {% set tracker_id=tracker.id %}
+
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     <a class="dropdown-item" href="{{ url_for('views.edit_tracker', record_id = tracker_id) }}">Edit Tracker</a>
     <a class="dropdown-item" href="{{ url_for('views.delete_tracker', record_id = tracker_id) }}">Remove Tracker</a>

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}Add Log{% endblock %}
+{% block content %}
+        <h1 align="left" class="card-header text-white" style="background: -webkit-linear-gradient(bottom, #FF5E0E, #FF9944);">Hello, {{ user.fullname }}</h1>
+
+<form method="post">
+    <h3 align="center"></h3>
+    <div class="form-group">
+
+        <h2 style="padding-left: 568px">Log {{tracker.name}}</h2>
+
+        <div align="center">
+
+            <br>
+
+             <label for="date">When: </label>
+        <input
+            type="datetime-local"
+            class="form-control"
+            id="date"
+            name="date"
+            style="width: 300px; border-radius: 15px; text-align: center"
+            value="{{now}}"
+            required
+        />
+        <label for="value">Value: </label>
+{% if tracker.tracker_type=='Numerical'  %}
+
+        <input
+            type="number"
+            class="form-control"
+            id="value"
+            name="value"
+            placeholder="Enter Number"
+            maxlength="30"
+            style="width: 300px; border-radius: 15px; text-align: center"
+            required
+        />
+{% elif tracker.tracker_type=='Fahrenheit' %}
+        <input
+            type="number"
+            class="form-control"
+            id="value"
+            name="value"
+            placeholder="Enter Fahrenheit"
+            maxlength="30"
+            style="width: 300px; border-radius: 15px; text-align: center"
+            required
+        />
+{% elif tracker.tracker_type=='Multiple Choice' %}
+                        <select style="width: 300px;text-align: center;border-radius: 15px;" id="value"  class="form-control"  name="value" required>
+                            <option value="Happy">Happy</option>
+                            <option value="Sad">Sad</option>
+                            <option value="Angry">Angry</option>
+                            <option value="Depressed">Depressed</option>
+                            <option value="Anxious">Anxious</option>
+
+                            </select>
+
+{% elif tracker.tracker_type=='Boolean' %}
+            <br>
+            <input type="radio" id="value" name="value" value="True" checked>
+             <label for="value">True</label><br>
+             <input type="radio" id="value" name="value" value="False">
+             <label for="value">False</label><br>
+
+{% endif %}
+
+            <label for="notes">Notes: </label>
+        <textarea
+            class="form-control"
+            id="notes"
+            name="notes"
+            placeholder="Enter log notes"
+            maxlength="200"
+            style="width: 300px; border-radius: 15px; text-align: center"
+            required
+        ></textarea>
+
+
+            <br>
+            <button type="submit" class="btn" style="border-radius: 12px;background: -webkit-linear-gradient(top, #FF5E0E, #FF9944);"><b>✩ Add Log</b></button>
+
+        </div>
+
+
+    </div>
+</form>
+
+{% endblock %}

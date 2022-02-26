@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}View Tracker Logs{% endblock %}
+{% block content %}
+        <h1 align="left" class="card-header text-white" style="background: -webkit-linear-gradient(bottom, #FF5E0E, #FF9944);">Hello, {{ user.fullname }}</h1>
+
+<div class="container emp-profile shadow-lg" style="padding-top: 30px">
+            <form method="post">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h3>
+                                      <b>{{ tracker.name }} - Tracker </b>
+                                    </h3>
+                                    <h4>&nbsp<small style="font-size: 12px">last updated : {{hour}} hours {{min}} minutes {{sec}} seconds ago</small></h4>
+
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Graph</a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-md-8" style="padding-top: 5px; padding-left: 32px">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="nav nav-tabs" id="myTab2" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab2" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Logs</a>
+                                </li>
+
+                            </ul>
+<!--                -->
+
+                <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">On</th>
+        <th scope="col">Value</th>
+      <th scope="col">Notes</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+{% for log in logs %}
+    {% if log.user_id==user.id and log.tracker_id==tracker.id %}
+    <tr>
+        {% set log_id=log.id %}
+      <td>{{log.timestamp}}</td>
+      <td>{{log.value}}</td>
+      <td>{{log.notes}}</td>
+      <td>
+
+          <div class="dropdown">
+  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 15px;background: -webkit-linear-gradient(bottom, #FF5E0E, #FF9944);">
+    <b>Actions</b>
+  </button>
+
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="{{ url_for('views.edit_log', record_id = log_id) }}">Edit Log</a>
+    <a class="dropdown-item" href="{{ url_for('views.delete_log', record_id = log_id) }}">Remove Log</a>
+  </div>
+</div>
+
+      </td>
+    </tr>
+{% endif %}
+    {% endfor %}
+
+  </tbody>
+</table>
+
+<!--                -->
+{% set tracker_id=tracker.id %}
+<div align="center">
+            <a href="{{ url_for('views.add_log', record_id = tracker_id) }}" class="btn" style="border-radius: 15px;background: -webkit-linear-gradient(bottom, #FF5E0E, #FF9944);"><b>✩ Add New Log</b></a>
+                    </div>
+            </form>
+        </div>
+{% endblock %}
