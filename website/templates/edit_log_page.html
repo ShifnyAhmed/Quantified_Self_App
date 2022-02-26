@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Edit Tracker{% endblock %}
+{% block title %}Edit Log{% endblock %}
 
 {% block content %}
         <h1 align="left" class="card-header text-white" style="background: -webkit-linear-gradient(bottom, #FF5E0E, #FF9944);">Hello, {{ user.fullname }}</h1>
@@ -14,7 +14,7 @@
 
             <br>
 
-            <label for="date">When</label>
+            <label for="date">When: </label>
         <input
             type="datetime-local"
             class="form-control"
@@ -23,7 +23,7 @@
             style="width: 300px; border-radius: 15px; text-align: center"
             value="{{log.timestamp}}"
         />
-        <label for="value">Value</label>
+        <label for="value">Value: </label>
 {% if tracker.tracker_type=='Numerical'  %}
 
         <input
@@ -57,9 +57,26 @@
                             <option value="Anxious">Anxious</option>
 
                             </select>
+
+
+{% elif tracker.tracker_type=='Boolean' %}
+            <br>
+            {% if log.value=='True' %}
+            <input type="radio" id="value" name="value" value="{{log.value}}" checked>
+            <label for="value">{{log.value}}</label><br>
+            <input type="radio" id="value" name="value" value="False">
+            <label for="value">False</label><br>
+            {% else %}
+            <input type="radio" id="value" name="value" value="{{log.value}}" checked>
+            <label for="value">{{log.value}}</label><br>
+            <input type="radio" id="value" name="value" value="True">
+            <label for="value">True</label><br>
+
+            {% endif %}
+
 {% endif %}
 
-            <label for="notes">Notes</label>
+            <label for="notes">Notes: </label>
         <textarea
             class="form-control"
             id="notes"

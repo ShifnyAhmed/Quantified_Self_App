@@ -13,7 +13,7 @@
 
             <br>
 
-             <label for="date">When</label>
+             <label for="date">When: </label>
         <input
             type="datetime-local"
             class="form-control"
@@ -23,7 +23,7 @@
             value="{{now}}"
             required
         />
-        <label for="value">Value</label>
+        <label for="value">Value: </label>
 {% if tracker.tracker_type=='Numerical'  %}
 
         <input
@@ -56,9 +56,17 @@
                             <option value="Anxious">Anxious</option>
 
                             </select>
+
+{% elif tracker.tracker_type=='Boolean' %}
+            <br>
+            <input type="radio" id="value" name="value" value="True" checked>
+             <label for="value">True</label><br>
+             <input type="radio" id="value" name="value" value="False">
+             <label for="value">False</label><br>
+
 {% endif %}
 
-            <label for="notes">Notes</label>
+            <label for="notes">Notes: </label>
         <textarea
             class="form-control"
             id="notes"
