@@ -29,3 +29,4 @@ class Log(db.Model):
     notes = db.Column(db.String(150))
     tracker_id = db.Column(db.Integer, db.ForeignKey('tracker.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    added_date_time = db.Column(db.String(150))

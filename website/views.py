@@ -152,7 +152,8 @@ def add_log(record_id):
             value = request.form.get('value')
             notes = request.form.get('notes')
             from . import db
-            new_log = Log(timestamp=when, value=value, notes=notes, tracker_id=record_id, user_id=current_user.id)
+            new_log = Log(timestamp=when, value=value, notes=notes, tracker_id=record_id, user_id=current_user.id,
+                          added_date_time=now)
             db.session.add(new_log)
             db.session.commit()
             flash('New Log Added For ' + this_tracker.name + ' Tracker', category='success')
@@ -167,6 +168,8 @@ def add_log(record_id):
 @login_required
 def view_tracker(record_id):
     from .models import Tracker, Log
+    import datetime
+    now = datetime.datetime.now()
     selected_tracker = Tracker.query.get(record_id)
     logs = Log.query.all()
     try:
@@ -190,11 +193,33 @@ def view_tracker(record_id):
             values.append(row[1])
 
         plt.plot_date(dates, values, '-')
-        plt.show()
+        # plt.show()
+
+        gon = sqlite3.connect('E:\Quantified_Self_App\website\database.db')
+        g = gon.cursor()
+        added_date_time = g.execute('SELECT added_date_time FROM Log WHERE '
+                                    'id=(SELECT max(id) FROM Log WHERE tracker_id={})'.format(record_id))
+
+        added_date_time = added_date_time.fetchone()
+        added_date_time = ''.join(added_date_time)
+        print(added_date_time)
+        from datetime import datetime
+        last_updated = now - parser.parse(added_date_time)
+        last_updated_str = str(last_updated)
+        hour = last_updated_str[:1]
+        min1 = last_updated_str[2]
+        min2 = last_updated_str[3]
+        min = min1 + min2
+        sec1 = last_updated_str[5]
+        sec2 = last_updated_str[6]
+        sec = sec1 + sec2
+        return render_template("view_tracker_logs_and_graph.html", user=current_user, tracker=selected_tracker,
+                               logs=logs, hour=hour, min=min, sec=sec)
     except Exception as e:
         print(e)
         flash('Something went wrong.', category='error')
-    return render_template("view_tracker_logs_and_graph.html", user=current_user, tracker=selected_tracker, logs=logs)
+        return render_template("view_tracker_logs_and_graph.html", user=current_user, tracker=selected_tracker,
+                               logs=logs)
 
 
 @views.route('/delete-log/<int:record_id>', methods=['GET', 'POST'])
@@ -232,7 +257,7 @@ def edit_log(record_id):
             this_log.notes = notes
 
             db.session.commit()
-            flash(this_tracker.name+' Log Updated Successfully.', category='success')
+            flash(this_tracker.name + ' Log Updated Successfully.', category='success')
             return redirect(url_for('views.view_tracker', record_id=this_log.tracker_id))
     except Exception as e:
         print(e)
