@@ -67,11 +67,10 @@
             <input type="radio" id="value" name="value" value="False">
             <label for="value">False</label><br>
             {% else %}
-            <input type="radio" id="value" name="value" value="{{log.value}}" checked>
-            <label for="value">{{log.value}}</label><br>
             <input type="radio" id="value" name="value" value="True">
             <label for="value">True</label><br>
-
+            <input type="radio" id="value" name="value" value="{{log.value}}" checked>
+            <label for="value">{{log.value}}</label><br>
             {% endif %}
 
 {% endif %}
