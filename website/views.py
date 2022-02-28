@@ -192,7 +192,12 @@ def view_tracker(record_id):
             dates.append(parser.parse(row[0]))
             values.append(row[1])
 
+        fig = plt.figure(figsize=(18, 8))
         plt.plot_date(dates, values, '-')
+        plt.xlabel('Date and Time')
+        plt.ylabel('Values')
+        plt.tight_layout()
+        plt.savefig('E:\Quantified_Self_App\website\static\Images\graph.png')
         # plt.show()
 
         gon = sqlite3.connect('E:\Quantified_Self_App\website\database.db')
